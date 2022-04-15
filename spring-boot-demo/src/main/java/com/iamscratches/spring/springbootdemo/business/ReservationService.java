@@ -96,4 +96,11 @@ public class ReservationService {
             throw new RuntimeException("Guest cannot be null");
         guestRepository.save(guest);
     }
+
+    public Room getRoomById(long id){
+        Boolean room = roomRepository.findById(id).isPresent();
+        if(room)
+            return roomRepository.findById(id).get();
+        return null;
+    }
 }
