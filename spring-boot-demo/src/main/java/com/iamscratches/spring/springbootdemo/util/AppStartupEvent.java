@@ -29,6 +29,6 @@ public class AppStartupEvent implements ApplicationListener<ApplicationReadyEven
     public void onApplicationEvent(ApplicationReadyEvent event) {
         Date date = this.dateUtils.createDateFromDateString("2022-01-01");
         List<RoomReservation> reservations = this.reservationService.getRoomReservationsForDate(date);
-        reservations.forEach(System.out::println);
+//        reservations.forEach(System.out::println);
     }
 }
