@@ -20,6 +20,9 @@ public class TourService {
         this.tourPackageRepository = tourPackageRepository;
     }
 
+    /*
+    Create a new tour
+     */
     public Tour createTour(String title, String description, String blurb, Integer price, String duration,
                            String bullets, String keywords, String tourPackageName, Difficulty difficulty,
                            Region region){
@@ -29,6 +32,9 @@ public class TourService {
                 difficulty, region));
     }
 
+    /*
+    Find total no. of tours
+     */
     public long total(){
         return tourRespository.count();
     }

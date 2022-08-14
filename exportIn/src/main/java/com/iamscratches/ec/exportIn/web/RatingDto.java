@@ -30,7 +30,7 @@ public class RatingDto {
 
     public RatingDto(TourRating tourRating) {
         setComment(tourRating.getComment());
-        setCustomerId(tourRating.getPk().getCustomerId());
+        setCustomerId(tourRating.getCustomerId());
         setScore(tourRating.getScore());
     }
 
