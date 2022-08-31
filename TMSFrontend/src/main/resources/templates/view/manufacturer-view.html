@@ -1,0 +1,49 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}"lang="en">
+<head>
+    <title>manufacturer</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="container main-content">
+        <div id="successMsg">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-success" id="message" th:text="${message != null} ? ${message} : 'Loaded successfully'"></li>
+            </ul>
+        </div>
+        <h3>manufacturer View</h3>
+        <form method="post" action="#" th:action="'/manufacturer/add'" th:object="${manufacturer}">
+            <div class="form-row">
+                <div class="col">
+                    <input th:id="manufacturerId" th:name="manufacturerId" type="text" class="form-control" title="Manufacturer ID" placeholder="Manufacturer ID" th:value="${manufacturer != null} ? ${manufacturer.manufacturerId}"/>
+                </div>
+                <div class="col">
+                    <input th:id="name" th:name="name" type="text" class="form-control" title="manufacturer name" placeholder="manufacturer name" th:value="${manufacturer != null} ? ${manufacturer.name}"/>
+                </div>
+                <div class="col">
+                    <input th:id="estd" th:name="estd" type="text" class="form-control" title="Established Date" placeholder="Established Date" th:value="${manufacturer != null} ? ${manufacturer.estd}"/>
+                </div>
+                <div class="col">
+                    <input th:id="licenseDate" th:name="licenseDate" type="text" class="form-control" title="License Date" placeholder="License Date" th:value="${manufacturer != null} ? ${manufacturer.licenseDate}"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <input th:id="expiryDate" th:name="expiryDate" type="text" class="form-control" title="Expiry Date" placeholder="Expiry Date" th:value="${manufacturer != null} ? ${manufacturer.expiryDate}"/>
+                </div>
+                <div class="col">
+                    <input th:id="expired" th:name="expired" type="text" class="form-control" title="Expired!" placeholder="Expired!" th:value="${manufacturer != null} ? ${manufacturer.expired}"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <button type="submit" class="btn btn-primary" id="submitPrompt">Submit</button>
+            </div>
+        </form>
+        <a th:href="@{/manufacturerlist}">Return to manufacturers list</a>
+    </div>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script th:src="@{/js/action.js}"></script>
+</div>
+</body>
+</html>

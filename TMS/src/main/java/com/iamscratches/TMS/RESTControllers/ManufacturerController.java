@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/manufacturer")
@@ -42,12 +43,21 @@ public class ManufacturerController {
         return entity;
     }
 
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.FOUND)
+    public ResponseEntity<ResponseMapper> findManufacturer(@RequestParam(value = "ID") int ID) throws NoSuchElementException {
+        LOGGER.debug("Received search request for Manufacturer ID " + ID);
+        ResponseMapper mapper = service.getManufacturerById(ID);
+        return new ResponseEntity<>(mapper, mapper.getResponse().getResponseCode());
+    }
+
     @PutMapping(value = "/import", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseMapper> insertManufacturer(@RequestBody Manufacturer manufacturer){
         LOGGER.debug("Recieved manufacturer insert request" + manufacturer);
         ResponseMapper mapper = service.insertManufacturer(manufacturer);
         return new ResponseEntity<>(mapper, mapper.getResponse().getResponseCode());
     }
+
 
     @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -57,4 +67,8 @@ public class ManufacturerController {
         return new ResponseEntity<>(mapper, mapper.getResponse().getResponseCode());
     }
 
+    @GetMapping(value = "/helloworld",produces = MediaType.APPLICATION_JSON_VALUE)
+    public String HelloWorld(){
+        return "Hello world";
+    }
 }

@@ -14,6 +14,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.NoSuchElementException;
+
 @RestController
 @RequestMapping("/api/registration")
 public class RegistrationController {
@@ -29,7 +31,7 @@ public class RegistrationController {
     /*
      * Get all users list
      */
-    @GetMapping(value = "/registrationList", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/registrationlist", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseMapper> getAllRegistration() throws JsonProcessingException {
         LOGGER.debug("Recieved Registration List request");
         ResponseMapper mapper = service.getAllRegistrations();
@@ -52,6 +54,14 @@ public class RegistrationController {
     public ResponseEntity<ResponseMapper> deleteUser(@RequestParam(value="appNo") Integer appNo){
         LOGGER.debug("Recieved registration delete request");
         ResponseMapper mapper = service.deleteByAppNo(appNo);
+        return new ResponseEntity<>(mapper, mapper.getResponse().getResponseCode());
+    }
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.FOUND)
+    public ResponseEntity<ResponseMapper> getRegistration(@RequestParam(value = "ID") int ID){
+        LOGGER.debug("Received search request for Registration ID " + ID);
+        ResponseMapper mapper = service.getRegistrationById(ID);
         return new ResponseEntity<>(mapper, mapper.getResponse().getResponseCode());
     }
 }

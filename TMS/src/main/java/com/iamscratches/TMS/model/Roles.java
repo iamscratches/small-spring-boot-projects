@@ -3,6 +3,7 @@ package com.iamscratches.TMS.model;
 import com.iamscratches.TMS.model.roles.RolesPkId;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -10,6 +11,7 @@ import javax.validation.constraints.Size;
 @IdClass(RolesPkId.class)
 public class Roles {
     @Id
+    @NotNull
     private String username;
 
     @Id

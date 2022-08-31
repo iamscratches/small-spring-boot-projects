@@ -1,6 +1,7 @@
 package com.iamscratches.TMS.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -14,6 +15,7 @@ public class Offence {
     @Column(name="VEHICLE_TYPE_ID")
     private Integer vehicleType;
     @Column
+    @NotNull
     private Integer penalty;
 
     @ManyToOne

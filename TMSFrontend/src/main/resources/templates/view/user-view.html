@@ -1,0 +1,61 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}"lang="en">
+<head>
+    <title>user</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="container main-content">
+        <div id="successMsg">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-success" id="message" th:text="${message != null} ? ${message} : 'Loaded successfully'"></li>
+            </ul>
+        </div>
+        <h3>user View</h3>
+        <form method="post" action="#" th:action="'/user/add'" th:object="${user}">
+            <div class="form-row">
+                <div class="col-5">
+                    <input th:id="username" th:name="username" type="text" class="form-control" title="username" placeholder="username(*)" th:value="${user != null} ? ${user.username}"/>
+                </div>
+                <div class="col-7">
+                    <input th:id="password" th:name="password" type="text" class="form-control" title="Password" placeholder="Password(*)" th:value="${user != null} ? ${user.password}"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <input th:id="fname" th:name="fname" type="text" class="form-control" title="First Name" placeholder="First Name(*)" th:value="${user != null} ? ${user.fname}"/>
+                </div>
+                <div class="col">
+                    <input th:id="lname" th:name="lname" type="text" class="form-control" title="Last Name" placeholder="Last Name(*)" th:value="${user != null} ? ${user.lname}"/>
+                </div>
+                <div class="col">
+                    <input th:id="contactNo" th:name="contactNo" type="text" class="form-control" title="contact info." placeholder="contact info.(+91)" th:value="${user != null} ? ${user.contactNo}"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <input th:id="address" th:name="address" type="text" class="form-control" title="address" placeholder="address(In full)" th:value="${user != null} ? ${user.address}"/>
+                </div>
+            </div>
+            <div th:if="${user}!=null">
+                <div class="form-row" th:each="role : ${user.roles}">
+                    <div class="col">
+                        <input th:id="rolename" th:name="rolename" type="text" class="form-control" title="Rolename" placeholder="Rolename" th:value="${role != null} ? ${role.rolename}" disabled="true"/>
+                    </div>
+                    <div class="col">
+                        <input th:id="roledesc" th:name="roledesc" type="text" class="form-control" title="Role Description" placeholder="Role Description" th:value="${role != null} ? ${role.roledesc}" disabled="true"/>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <button type="submit" class="btn btn-primary" id="submitPrompt">Submit</button>
+            </div>
+        </form>
+        <a th:href="@{/userlist}">Return to users list</a>
+    </div>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script th:src="@{/js/action.js}"></script>
+</div>
+</body>
+</html>

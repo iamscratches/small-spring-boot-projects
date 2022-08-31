@@ -1,0 +1,52 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}"lang="en">
+<head>
+    <title>Owner</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="container main-content">
+        <div class="row">
+            <div class="col-7">
+                <h3>Registrations</h3>
+            </div>
+            <div class="col">
+                <a th:href="@{/registration/add}">Add New Registration</a>
+            </div>
+        </div>
+        <table id="table" class="table table-striped table-sm">
+            <thead>
+                <th scope="col">#</th>
+                <th scope="col">Vehicle name</th>
+                <th scope="col">Vehicle no.</th>
+                <th scope="col">Vehicle Category</th>
+                <th scope="col">Manufacturer</th>
+                <th scope="col">Owner</th>
+                <th scope="col">Date of Retention</th>
+                <th scope="col">Expiry Date</th>
+                <th scope="col">Valid</th>
+                <th scope="col">Actions</th>
+            </thead>
+            <tbody>
+                <tr th:each="registration : ${registrations}">
+                    <th scope="row"><a th:href="@{'/registration/' + ${registration.appNo}}" th:text="${registration.appNo}"></a></th>
+                    <td th:text="${registration.vehicle.modelName}"></td>
+                    <td th:text="${registration.vehicleNo}"></td>
+                    <td th:text="${registration.vehicle.typeOfVehicles.vehicleCategory}"></td>
+                    <td th:text="${registration.vehicle.manufacturer.name}"></td>
+                    <td th:text="${registration.owner.fname} + ' ' + ${registration.owner.lname}"></td>
+                    <td th:text="${#strings.arraySplit(registration.dateOfRetention, 'T')[0]}"></td>
+                    <td th:text="${#strings.arraySplit(registration.dateOfExpiry, 'T')[0]}"></td>
+                    <td th:text="${registration.valid}"></td>
+                    <td ><a th:href="@{'/registration/delete/' + ${registration.appNo}}"><iconify-icon icon="bi:trash"></iconify-icon></a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script th:src="@{/js/table.js}"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.0-beta.3/iconify-icon.min.js"></script>
+</div>
+</body>
+</html>

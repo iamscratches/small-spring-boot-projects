@@ -51,7 +51,7 @@ public class VehicleService {
         }
     }
 
-    public VehiclesUpdateList importVehicles(List<Vehicle> vehicleList, boolean skipUpdate){
+    public ResponseMapper importVehicles(List<Vehicle> vehicleList, boolean skipUpdate){
 
         Map<Integer, Vehicle> entriesCreatedList = new HashMap<>();
         Map<Integer, Vehicle> entriesIgnoredList = new HashMap<>();
@@ -109,43 +109,49 @@ public class VehicleService {
         topStats.put(entriesModified, entriesModifiedList.size());
 
         VehiclesUpdateList vehiclesUpdateList = new VehiclesUpdateList(topStats, baseStats);
-        return vehiclesUpdateList;
+        ResponseMapper mapper = new ResponseMapper(HttpStatus.CREATED, "Vehicles Inserted Successfully",
+                vehiclesUpdateList);
+        return mapper;
     }
 
-    public String[] importSingleVehicle(Vehicle vehicle){
+    public ResponseMapper importSingleVehicle(Vehicle vehicle){
         if(vehicle.getVehicleId()!=null && vehicleRepository.existsById(vehicle.getVehicleId()))
-            return new String[]{HttpStatus.CONFLICT.toString(),"Vehicle ID already exists"};
+            return new ResponseMapper(HttpStatus.CONFLICT,"Vehicle ID already exists");
         else if(vehicle.getModelNo() == null)
-            return new String[]{HttpStatus.BAD_REQUEST.toString(),"model no. cannot be null"};
+            return new ResponseMapper(HttpStatus.BAD_REQUEST,"model no. cannot be null");
         else if(vehicle.getModelName() == null)
-            return new String[]{HttpStatus.BAD_REQUEST.toString(),"model name cannot be null"};
+            return new ResponseMapper(HttpStatus.BAD_REQUEST,"model name cannot be null");
         else if(vehicle.getVehicleType() == null)
-            return new String[]{HttpStatus.BAD_REQUEST.toString(),"vehicle type cannot be null or 0"};
+            return new ResponseMapper(HttpStatus.BAD_REQUEST,"vehicle type cannot be null or 0");
         else if(vehicle.getManufacturerId() == null)
-            return new String[]{HttpStatus.BAD_REQUEST.toString(),"manufacturer ID cannot be null or 0"};
+            return new ResponseMapper(HttpStatus.BAD_REQUEST,"manufacturer ID cannot be null or 0");
         if(vehicle.getDom()==null)
             vehicle.setDom(new Date());
-        if(vehicle.getLpc()!=null)
+        if(vehicle.getLpc()==null)
             vehicle.setLpc(new Date());
         if(vehicle.getVehicleId()==null)
             vehicle.setVehicleId(IdGenerator.generateUniqueId());
         LOGGER.debug("Saving vehicles data");
         vehicleRepository.save(vehicle);
 
-        return new String[]{HttpStatus.CREATED.toString(),"Vehicle Entry successful", vehicle.toString()};
+        return new ResponseMapper(HttpStatus.CREATED,"Vehicle Entry successful",
+                vehicle);
     }
 
-    public Optional<Vehicle> getVehicleByID(int ID){
-        return vehicleRepository.findByVehicleId(ID);
+    public ResponseMapper getVehicleByID(int ID){
+        if(this.vehicleRepository.existsById(ID))
+            return new ResponseMapper(HttpStatus.FOUND, "Vehicle details found with given ID",
+                    this.vehicleRepository.findByVehicleId(ID));
+        return new ResponseMapper(HttpStatus.NOT_FOUND, "No vehicle Info found with given ID");
     }
 
-    public String deleteVehicleID(int id) throws JsonProcessingException {
+    public ResponseMapper deleteVehicleID(int id) throws JsonProcessingException {
         if(vehicleRepository.existsById(id)) {
             vehicleRepository.deleteById(id);
-            return JsonMapper.mapToJson(new AbstractMap.SimpleEntry<>("message", "Vehicle entry deleted successfully"));
+            return new ResponseMapper(HttpStatus.NO_CONTENT,"message", "Vehicle entry deleted successfully");
         }
         else{
-            return JsonMapper.mapToJson(new AbstractMap.SimpleEntry<>("message", "Vehicle ID not found"));
+            return new ResponseMapper(HttpStatus.NOT_FOUND,"message", "No vehicle with Given ID found");
         }
     }
 }

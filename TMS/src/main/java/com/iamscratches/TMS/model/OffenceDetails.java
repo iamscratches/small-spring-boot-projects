@@ -1,6 +1,7 @@
 package com.iamscratches.TMS.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -11,8 +12,10 @@ public class OffenceDetails {
     @Column
     private Integer appNo;
     @Column(name = "OFFENCE_ID")
+    @NotNull
     private Integer offenceId;
     @Column(name = "VEHICLE_NO")
+    @NotNull
     private Integer vehicleNo;
     @Column
     private LocalDateTime offenceTime;

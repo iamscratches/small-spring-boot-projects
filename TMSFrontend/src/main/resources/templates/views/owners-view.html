@@ -1,0 +1,50 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}"lang="en">
+<head>
+    <title>Owner</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="container main-content">
+        <div class="row">
+            <div class="col-7">
+                <h3>Owners</h3>
+            </div>
+            <div class="col">
+                <a th:href="@{/owner/add}">Add New Owner</a>
+            </div>
+        </div>
+        <table id="table" class="table table-striped table-sm">
+            <thead>
+                <th scope="col">#</th>
+                <th scope="col">First</th>
+                <th scope="col">Last</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Date of birth</th>
+                <th scope="col">State Code</th>
+                <th scope="col">Pincode</th>
+                <th scope="col">occupation</th>
+                <th scope="col">Actions</th>
+            </thead>
+            <tbody>
+                <tr th:each="owner : ${owners}">
+                    <th scope="row"><a th:href="@{'/owner/' + ${owner.ownerId}}" th:text="${owner.ownerId}"></a></th>
+                    <td th:text="${owner.fname}"></td>
+                    <td th:text="${owner.lname}"></td>
+                    <td th:text="${owner.gender}"></td>
+                    <td th:text="${#strings.arraySplit(owner.dob, 'T')[0]}"></td>
+                    <td th:text="${owner.stateCode}"></td>
+                    <td th:text="${owner.pincode}"></td>
+                    <td th:text="${owner.occupation}"></td>
+                    <td ><a th:href="@{'/owner/delete/' + ${owner.ownerId}}"><iconify-icon icon="bi:trash"></iconify-icon></a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script th:src="@{/js/table.js}"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.0-beta.3/iconify-icon.min.js"></script>
+</div>
+</body>
+</html>

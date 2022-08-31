@@ -4,6 +4,7 @@ import com.iamscratches.TMS.utils.model.Owner.Gender;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
@@ -15,36 +16,45 @@ public class Owner {
     @Column(name = "OWNER_ID")
     private Integer ownerId;
     @Column
+    @NotNull
     private String fname;
     @Column
     private String lname;
     @Column
+    @NotNull
     private Date dob;
     @Column
     private Long landlineNo;
     @Column
+    @NotNull
     private Long mobileNo;
     @Column
+    @NotNull
     private Gender gender;
     @Column
     private String tempAddr;
     @Column
+    @NotNull
     private String permAddr;
     @Column
     @Range(min=100000,max=999999)
+    @NotNull
     private Integer pincode;
     @Column
     @Size(min=2,max=2, message = "State code must be 2 Character Long")
+    @NotNull
     private String stateCode;
     @Column
     private String occupation;
     @Column
     @Size(min=12, max=12)
+    @NotNull
     private String adhaar;
     @Column
     @Size(min=10,max=10)
     private String pancard;
     @Column
+    @NotNull
     private String addProofName;
 
     @OneToMany

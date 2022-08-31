@@ -80,6 +80,13 @@ public class RegistrationService {
         }
     }
 
+    public ResponseMapper getRegistrationById(int ID){
+        if(this.repository.existsById(ID))
+            return new ResponseMapper(HttpStatus.FOUND, "Registration info found with given ID",
+                    this.repository.findById(ID));
+        return new ResponseMapper(HttpStatus.NOT_FOUND, "No Registration Info found with given ID");
+    }
+
     private String validateRegistration(Registration registration){
         if(registration.getAppNo()==null)
             registration.setAppNo(IdGenerator.generateUniqueId());
@@ -96,7 +103,7 @@ public class RegistrationService {
         else if(repository.existsById(registration.getAppNo()))
             return "Application ID already exists";
         else if(repository.existsByVehicleNo(registration.getVehicleNo()))
-            return "Please provide a first name";
+            return "Please provide a unique Vehicle No";
         else if(repository.existsByVehicleIdAndOwnerId(registration.getVehicleId(), registration.getOwnerId()))
             return "Vehicle ID already registered with other owner";
         else if(repository.existsByVehicleId(registration.getVehicleId()))

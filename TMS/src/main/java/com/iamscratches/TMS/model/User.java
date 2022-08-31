@@ -3,6 +3,7 @@ package com.iamscratches.TMS.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
@@ -12,15 +13,19 @@ public class User {
     @Id
     @Column(name="USERNAME")
     @Size(min=1,max=15)
+    @NotNull
     private String username;
 
     @Column
+    @NotNull
     private String password;
 
     @Column
+    @NotNull
     private String fname;
 
     @Column
+    @NotNull
     private String lname;
 
     @Column

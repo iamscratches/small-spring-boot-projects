@@ -14,6 +14,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.NoSuchElementException;
+
 @RestController
 @RequestMapping("/api/roles")
 public class RolesController {
@@ -55,9 +57,17 @@ public class RolesController {
         LOGGER.debug("Recieved roles delete request");
         ResponseMapper mapper;
         if(rolename==null)
-             mapper = service.deleteUserById(username);
+             mapper = service.deleteRoleById(username);
         else
              mapper = service.deleteRolesByUsernameAndRolename(username, rolename);
+        return new ResponseEntity<>(mapper, mapper.getResponse().getResponseCode());
+    }
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.FOUND)
+    public ResponseEntity<ResponseMapper> findRole(@RequestParam(value = "ID") String username) throws NoSuchElementException {
+        LOGGER.debug("Received search request for Role username " + username);
+        ResponseMapper mapper = service.getRoleByUsername(username);
         return new ResponseEntity<>(mapper, mapper.getResponse().getResponseCode());
     }
 }

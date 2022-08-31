@@ -1,0 +1,40 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}"lang="en">
+<head>
+    <title>role</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="container main-content">
+        <div id="successMsg">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-success" id="message" th:text="${message != null} ? ${message} : 'Loaded successfully'"></li>
+            </ul>
+        </div>
+        <h3>role View</h3>
+        <form method="post" action="#" th:action="'/role/add'" th:object="${role}">
+            <div class="form-row">
+                <div class="col">
+                    <input th:id="username" th:name="username" type="text" class="form-control" title="Username" placeholder="Username(*)" th:value="${role != null} ? ${role.username}"/>
+                </div>
+                <div class="col">
+                    <input th:id="rolename" th:name="rolename" type="text" class="form-control" title="Role Name" placeholder="Role Name(*)" th:value="${role != null} ? ${role.rolename}"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <input th:id="roledesc" th:name="roledesc" type="text" class="form-control" title="Role Description" placeholder="Role Description" th:value="${role != null} ? ${role.roledesc}"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <button type="submit" class="btn btn-primary" id="submitPrompt">Submit</button>
+            </div>
+        </form>
+        <a th:href="@{/rolelist}">Return to roles list</a>
+    </div>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script th:src="@{/js/action.js}"></script>
+</div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}"lang="en">
+<head>
+    <title>Type Of Vehicles</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="container main-content">
+        <div id="successMsg">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-success" id="message" th:text="${message != null} ? ${message} : 'Loaded successfully'"></li>
+            </ul>
+        </div>
+        <h3>Type Of Vehicles View</h3>
+        <form method="post" action="#" th:action="'/typeOfVehicle/add'" th:object="${TypeOfVehicles}">
+            <div class="form-row">
+                <div class="col">
+                    <input th:id="vehicleTypeId" th:name="vehicleTypeId" type="text" class="form-control" title="Vehicle ID" placeholder="Vehicle ID(Auto Generated)" th:value="${tov != null} ? ${tov.vehicleTypeId}"/>
+                </div>
+                <div class="col">
+                    <input th:id="vehicleCategory" th:name="vehicleCategory" type="text" class="form-control" title="Vehicle Category" placeholder="Vehicle Category(*)" th:value="${tov != null} ? ${tov.vehicleCategory}"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <button type="submit" class="btn btn-primary" id="submitPrompt">Submit</button>
+            </div>
+        </form>
+        <a th:href="@{/typeofvehiclelist}">Return to Type Of Vehicles list</a>
+    </div>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script th:src="@{/js/action.js}"></script>
+</div>
+</body>
+</html>

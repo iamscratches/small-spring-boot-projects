@@ -79,6 +79,13 @@ public class OffenceService {
         }
     }
 
+    public ResponseMapper getOffenceById(int ID){
+        if(this.repository.existsById(ID))
+            return new ResponseMapper(HttpStatus.FOUND, "Offence info found with given ID",
+                    this.repository.findById(ID));
+        return new ResponseMapper(HttpStatus.NOT_FOUND, "No Offence Info found with given ID");
+    }
+
     private String validateOffence(Offence offence){
         if(offence.getOffenceId()==null)
             offence.setOffenceId(IdGenerator.generateUniqueId());

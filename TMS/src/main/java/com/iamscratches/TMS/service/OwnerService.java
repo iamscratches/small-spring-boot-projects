@@ -43,7 +43,26 @@ public class OwnerService {
         }
     }
 
-    public ResponseMapper insertOwner(Owner owner){
+    public ResponseMapper getOwnerById(int id){
+        try{
+            Owner owner;
+            LOGGER.debug("Recieved Owner ID request");
+            if(this.repository.existsById(id))
+                owner = this.repository.findByOwnerId(id);
+            else
+                return new ResponseMapper(HttpStatus.NOT_FOUND, "No Such owner with given ID is found");
+            return new ResponseMapper(HttpStatus.FOUND, "Fetched Owner by ID", owner);
+        }catch (Exception e){
+            LOGGER.error("Owner fetch failed : " + e.getMessage());
+            return new ResponseMapper(HttpStatus.GATEWAY_TIMEOUT,
+                    "Something went wrong, not able to fetch Owner details");
+        }
+    }
+
+    public ResponseMapper insertOwner(Owner owner,boolean update){
+        if(update && owner.getOwnerId()!=null && this.repository.existsById(owner.getOwnerId())){
+            deleteOwnerById(owner.getOwnerId());
+        }
         String msg = validateOwner(owner);
         if(msg!=ALL_OK)
             return new ResponseMapper(HttpStatus.NOT_ACCEPTABLE, msg);

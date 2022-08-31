@@ -13,6 +13,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.NoSuchElementException;
+
 @RestController
 @RequestMapping("/api/offence")
 public class OffenceController {
@@ -52,6 +54,14 @@ public class OffenceController {
             @RequestParam(value="offenceID") Integer offenceID){
         LOGGER.debug("Recieved offence delete request");
         ResponseMapper mapper = service.deleteOffenceById(offenceID);
+        return new ResponseEntity<>(mapper, mapper.getResponse().getResponseCode());
+    }
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.FOUND)
+    public ResponseEntity<ResponseMapper> findOffence(@RequestParam(value = "ID") int ID) throws NoSuchElementException {
+        LOGGER.debug("Received search request for Offence ID " + ID);
+        ResponseMapper mapper = service.getOffenceById(ID);
         return new ResponseEntity<>(mapper, mapper.getResponse().getResponseCode());
     }
 }

@@ -1,9 +1,8 @@
 package com.iamscratches.TMS.model;
 
-import io.micrometer.core.lang.Nullable;
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -13,16 +12,20 @@ public class Vehicle {
     @Column(name = "VEHICLE_ID")
     private Integer vehicleId;
     @Column
+    @NotNull
     private String modelNo;
     @Column
+    @NotNull
     private String modelName;
     @Column(name="VEHICLE_TYPE")
+    @NotNull
     private Integer vehicleType;
     @Column
     private String color;
     @Column(name = "OWNER_ID")
     private Integer ownerId;
     @Column(name = "MANUFACTURER_ID")
+    @NotNull
     private Integer manufacturerId;
     @Column
     private Date dom;

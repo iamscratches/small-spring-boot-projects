@@ -1,0 +1,42 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}"lang="en">
+<head>
+    <title>Owner</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="container main-content">
+        <div class="row">
+            <div class="col-7">
+                <h3>Offences</h3>
+            </div>
+            <div class="col">
+                <a th:href="@{/offence/add}">Add New Offence</a>
+            </div>
+        </div>
+        <table id="table" class="table table-striped table-sm">
+            <thead>
+                <th scope="col">#</th>
+                <th scope="col">Nature Of Offence</th>
+                <th scope="col">Vehicle Category</th>
+                <th scope="col">Penalty</th>
+                <th scope="col">Actions</th>
+            </thead>
+            <tbody>
+                <tr th:each="offence : ${offences}">
+                    <th scope="row"><a th:href="@{'/offence/' + ${offence.offenceId}}" th:text="${offence.offenceId}"></a></th>
+                    <td th:text="${offence.nof}"></td>
+                    <td th:text="${offence.typeOfVehicles.vehicleCategory}"></td>
+                    <td th:text="${offence.penalty}"></td>
+                    <td ><a th:href="@{'/offence/delete/' + ${offence.offenceId}}"><iconify-icon icon="bi:trash"></iconify-icon></a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script th:src="@{/js/table.js}"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.0-beta.3/iconify-icon.min.js"></script>
+</div>
+</body>
+</html>

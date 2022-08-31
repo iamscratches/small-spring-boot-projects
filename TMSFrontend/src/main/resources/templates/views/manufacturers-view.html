@@ -1,0 +1,46 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}"lang="en">
+<head>
+    <title>Manufacturer</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="container main-content">
+        <div class="row">
+            <div class="col-7">
+                <h3>Manufacturers</h3>
+            </div>
+            <div class="col">
+                <a th:href="@{/manufacturer/add}">Add New Manufacturer</a>
+            </div>
+        </div>
+        <table id="table" class="table table-striped table-sm">
+            <thead>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Establed date</th>
+                <th scope="col">License Date</th>
+                <th scope="col">Expiry Date</th>
+                <th scope="col">Expired</th>
+                <th scope="col">Actions</th>
+            </thead>
+            <tbody>
+                <tr th:each="manufacturer : ${manufacturers}">
+                    <th scope="row"><a th:href="@{'/manufacturer/' + ${manufacturer.manufacturerId}}" th:text="${manufacturer.manufacturerId}"></a></th>
+                    <td th:text="${manufacturer.name}"></td>
+                    <td th:text="${#strings.arraySplit(manufacturer.estd, 'T')[0]}"></td>
+                    <td th:text="${#strings.arraySplit(manufacturer.licenseDate, 'T')[0]}"></td>
+                    <td th:text="${#strings.arraySplit(manufacturer.expiryDate, 'T')[0]}"></td>
+                    <td th:text="${manufacturer.expired}"></td>
+                    <td ><a th:href="@{'/manufacturer/delete/' + ${manufacturer.manufacturerId}}"><iconify-icon icon="bi:trash"></iconify-icon></a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script th:src="@{/js/table.js}"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.0-beta.3/iconify-icon.min.js"></script>
+</div>
+</body>
+</html>

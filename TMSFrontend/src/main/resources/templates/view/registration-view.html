@@ -1,0 +1,96 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}"lang="en">
+<head>
+    <title>registration</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="container main-content">
+        <div id="successMsg">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-success" id="message" th:text="${message != null} ? ${message} : 'Loaded successfully'"></li>
+            </ul>
+        </div>
+        <h3>registration View</h3>
+        <form method="post" action="#" th:action="'/registration/add'" th:object="${registration}">
+            <div class="form-row">
+                <div class="col">
+                    <input th:id="appNo" th:name="appNo" type="text" class="form-control" title="Application No." placeholder="Application No.(Auto generated)" th:value="${registration != null} ? ${registration.appNo}"/>
+                </div>
+                <div class="col">
+                    <input th:id="vehicleId" th:name="vehicleId" type="text" class="form-control" title="Vehicle ID" placeholder="Vehicle ID(*)" th:value="${registration != null} ? ${registration.vehicleId}"/>
+                </div>
+                <div class="col">
+                    <input th:id="vehicleNo" th:name="vehicleNo" type="text" class="form-control" title="Vehicle No." placeholder="Vehicle No.(Auto generated)" th:value="${registration != null} ? ${registration.vehicleNo}"/>
+                </div>
+                <div class="col">
+                    <input th:id="ownerId" th:name="ownerId" type="text" class="form-control" title="Owner ID" placeholder="Owner ID" th:value="${registration != null} ? ${registration.ownerId}"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <input th:id="dateOfRetention" th:name="dateOfRetention" type="text" class="form-control" title="Retention Date" placeholder="Retention Date" th:value="${registration != null} ? ${#strings.arraySplit(registration.dateOfRetention, 'T')[0]}"/>
+                </div>
+                <div class="col">
+                    <input th:id="dateOfExpiry" th:name="dateOfExpiry" type="text" class="form-control" title="Expiry Date" placeholder="Expiry Date" th:value="${registration != null} ? ${#strings.arraySplit(registration.dateOfExpiry, 'T')[0]}"/>
+                </div>
+                <div class="col">
+                    <input th:id="valid" th:name="valid" type="text" class="form-control" title="valid" placeholder="valid!" th:value="${registration != null} ? ${registration.valid}"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <input th:id="modelNo" th:name="modelNo" type="text" class="form-control" title="Model No" placeholder="Model No." th:value="${registration != null && registration.vehicle != null} ? ${registration.vehicle.modelNo}" disabled="true"/>
+                </div>
+                <div class="col">
+                    <input th:id="modelName" th:name="modelName" type="text" class="form-control" title="Model Name" placeholder="Model Name" th:value="${registration != null && registration.vehicle != null} ? ${registration.vehicle.modelName}" disabled="true"/>
+                </div>
+                <div class="col">
+                    <input th:id="color" th:name="color" type="text" class="form-control" title="Color" placeholder="Color" th:value="${registration != null && registration.vehicle != null} ? ${registration.vehicle.color}" disabled="true"/>
+                </div>
+                <div class="col">
+                    <input th:id="dom" th:name="dom" type="text" class="form-control" title="Date Of Manufacture" placeholder="Date Of Manufacture" th:value="${registration != null && registration.vehicle != null} ? ${registration.vehicle.dom}" disabled="true"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <input th:id="fuelUsed" th:name="fuelUsed" type="text" class="form-control" title="Fuel Used" placeholder="Fuel Used" th:value="${registration != null && registration.vehicle != null} ? ${registration.vehicle.fuelUsed}" disabled="true"/>
+                </div>
+                <div class="col">
+                    <input th:id="lpc" th:name="lpc" type="text" class="form-control" title="last pollution check" placeholder="last pollution check" th:value="${registration != null && registration.vehicle != null} ? ${registration.vehicle.lpc}" disabled="true"/>
+                </div>
+                <div class="col">
+                    <input th:id="expired" th:name="expired" type="text" class="form-control" title="Expired!" placeholder="Expired!" th:value="${registration != null && registration.vehicle != null} ? ${registration.vehicle.expired}" disabled="true"/>
+                </div>
+                <div class="col">
+                    <input th:id="name" th:name="name" type="text" class="form-control" title="Manufacturer Name" placeholder="Manufacturer Name" th:value="${registration != null && registration.vehicle != null} ? ${registration.vehicle.manufacturer.name}" disabled="true"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <input th:id="typeOfVehicles" th:name="typeOfVehicles" type="text" class="form-control" title="Vehicle Category" placeholder="Vehicle Category" th:value="${registration != null && registration.vehicle != null} ? ${registration.vehicle.typeOfVehicles.vehicleCategory}" disabled="true"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <input th:id="fname" th:name="fname" type="text" class="form-control" title="owner First Name" placeholder="owner First Name" th:value="${registration != null && registration.vehicle != null} ? ${registration.owner.fname}" disabled="true"/>
+                </div>
+                <div class="col">
+                    <input th:id="owner.lname" th:name="owner.lname" type="text" class="form-control" title="owner Last Name" placeholder="owner Last Name" th:value="${registration != null && registration.owner != null} ? ${registration.owner.lname}" disabled="true"/>
+                </div>
+                <div class="col">
+                    <input th:id="mobileNo" th:name="mobileNo" type="text" class="form-control" title="Contact Info" placeholder="Contact Info" th:value="${registration != null && registration.owner != null} ? ${registration.owner.mobileNo}" disabled="true"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <button type="submit" class="btn btn-primary" id="submitPrompt">Submit</button>
+            </div>
+        </form>
+        <a th:href="@{/registrationlist}">Return to registrations list</a>
+    </div>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script th:src="@{/js/action.js}"></script>
+</div>
+</body>
+</html>

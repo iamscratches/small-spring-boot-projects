@@ -1,11 +1,7 @@
 package com.iamscratches.TMS.service;
 
-import com.iamscratches.TMS.model.Manufacturer;
-import com.iamscratches.TMS.model.TypeOfVehicles;
 import com.iamscratches.TMS.model.User;
-import com.iamscratches.TMS.repo.TypeOfVehicleRepository;
 import com.iamscratches.TMS.repo.UserRepository;
-import com.iamscratches.TMS.utils.IdGenerator;
 import com.iamscratches.TMS.utils.model.ResponseMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -38,9 +33,9 @@ public class UserService {
             Iterable<User> users = this.repository.findAll();
             List<User> userList = new ArrayList<>();
             users.forEach(userList::add);
-            for(User user: userList){
-                user.setPassword("XXXXXXXXXXXX");
-            }
+//            for(User user: userList){
+//                user.setPassword(new BCryptPasswordEncoder(user.get));
+//            }
 
             LOGGER.debug("Send User List");
             return new ResponseMapper(HttpStatus.OK, "Fetched All Users", userList);
@@ -69,7 +64,8 @@ public class UserService {
     }
 
     public ResponseMapper deleteUserById(String username){
-        LOGGER.debug("Recieved user delete request by OwnerID");
+        LOGGER.debug("Recieved user delete request by username" +
+                "");
         try{
             if(!repository.existsByUsername(username)){
                 return new ResponseMapper(HttpStatus.NOT_FOUND,
@@ -84,6 +80,13 @@ public class UserService {
         }
     }
 
+    public ResponseMapper getUserByUsername(String username){
+        if(this.repository.existsByUsername(username))
+            return new ResponseMapper(HttpStatus.FOUND, "User info found with given username",
+                    this.repository.findByUsername(username));
+        return new ResponseMapper(HttpStatus.NOT_FOUND, "No User Info found with given username");
+    }
+
     private String validateUser(User user){
         if(user.getUsername()==null)
             return "Please provide a username";
@@ -93,8 +96,6 @@ public class UserService {
             return "Please provide a first name";
         else if(user.getLname()==null)
             return "Please provide a last name";
-        else if(repository.existsByUsername(user.getUsername()))
-            return "username already exists pls use a different username";
 
         return ALL_OK;
     }

@@ -1,0 +1,96 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}"lang="en">
+<head>
+    <title>owner</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="container main-content">
+        <div id="successMsg">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-success" id="message" th:text="${message != null} ? ${message} : 'Loaded successfully'"></li>
+            </ul>
+        </div>
+        <h3>owner View</h3>
+        <form method="post" action="#" th:action="'/owner/add'" th:object="${owner}">
+            <div class="form-row">
+                <div class="col">
+                    <input th:id="ownerId" th:name="ownerId" type="text" class="form-control" title="Owner ID" placeholder="Owner ID(Auto Generated)" th:value="${owner != null} ? ${owner.ownerId}"/>
+                </div>
+                <div class="col">
+                    <input th:id="fname" th:name="fname" type="text" class="form-control" title="First Name" placeholder="First Name(*)" th:value="${owner != null} ? ${owner.fname}"/>
+                </div>
+                <div class="col">
+                    <input th:id="lname" th:name="lname" type="text" class="form-control" title="Last Name" placeholder="Last Name(*)" th:value="${owner != null} ? ${owner.lname}"/>
+                </div>
+                <div class="col">
+                    <input th:id="dob" th:name="dob" type="text" class="form-control" title="Date Of Birth" placeholder="Date Of Birth(*)" th:value="${owner != null} ? ${owner.dob}"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <input th:id="landlineNo" th:name="landlineNo" type="text" class="form-control" title="Landline No." placeholder="Landline No." th:value="${owner != null} ? ${owner.landlineNo}"/>
+                </div>
+                <div class="col">
+                    <input th:id="mobileNo" th:name="mobileNo" type="text" class="form-control" title="Mobile No." placeholder="Mobile No.(*)" th:value="${owner != null} ? ${owner.mobileNo}"/>
+                </div>
+                <div class="col">
+                    <input th:id="gender" th:name="gender" type="text" class="form-control" title="Gender(MALE/FEMALE/OTHERS)" placeholder="Gender(M/F/O)" th:value="${owner != null} ? ${owner.gender}"/>
+                </div>
+                <div class="col">
+                    <input th:id="tempAddr" th:name="tempAddr" type="text" class="form-control" title="Temporary Address" placeholder="Temporary Address" th:value="${owner != null} ? ${owner.tempAddr}"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <input th:id="permAddr" th:name="permAddr" type="text" class="form-control" title="Permanent Address" placeholder="Permanent Address(*)" th:value="${owner != null} ? ${owner.permAddr}"/>
+                </div>
+                <div class="col">
+                    <input th:id="pincode" th:name="pincode" type="text" class="form-control" title="pincode" placeholder="pincode(*)" th:value="${owner != null} ? ${owner.pincode}"/>
+                </div>
+                <div class="col">
+                    <input th:id="stateCode" th:name="stateCode" type="text" class="form-control" title="State Code" placeholder="State Code(*)" th:value="${owner != null} ? ${owner.stateCode}"/>
+                </div>
+                <div class="col">
+                    <input th:id="occupation" th:name="occupation" type="text" class="form-control" title="occupation" placeholder="occupation" th:value="${owner != null} ? ${owner.occupation}"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <input th:id="adhaar" th:name="adhaar" type="text" class="form-control" title="Adhaar" placeholder="Adhaar(*)" th:value="${owner != null} ? ${owner.adhaar}"/>
+                </div>
+                <div class="col">
+                    <input th:id="pancard" th:name="pancard" type="text" class="form-control" title="Pancard No." placeholder="Pancard No.(12 digits)" th:value="${owner != null} ? ${owner.pancard}"/>
+                </div>
+                <div class="col">
+                    <input th:id="addProofName" th:name="addProofName" type="text" class="form-control" title="Address Proof Name" placeholder="Address Proof Name(*)" th:value="${owner != null} ? ${owner.addProofName}"/>
+                </div>
+            </div>
+            <div th:if="${owner}!=null">
+                <div class="form-row" th:each="vehicle : ${owner.vehicle}">
+                    <div class="col">
+                        <input th:id="vehicleId" th:name="vehicleId" type="text" class="form-control" title="Vehicle ID" placeholder="Vehicle ID" th:value="${vehicle != null} ? ${vehicle.vehicleId}" disabled="true"/>
+                    </div>
+                    <div class="col">
+                        <input th:id="modelName" th:name="modelName" type="text" class="form-control" title="Model Name" placeholder="Model Name" th:value="${vehicle != null} ? ${vehicle.modelName}" disabled="true"/>
+                    </div>
+                    <div class="col">
+                        <input th:id="name" th:name="name" type="text" class="form-control" title="Manufacturer name" placeholder="Manufacturer name" th:value="${vehicle != null} ? ${vehicle.manufacturer.name}" disabled="true"/>
+                    </div>
+                    <div class="col">
+                        <input th:id="vehicleCategory" th:name="vehicleCategory" type="text" class="form-control" title="Vehicle Category" placeholder="Vehicle Category" th:value="${vehicle != null} ? ${vehicle.typeOfVehicles.vehicleCategory}" disabled="true"/>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <button type="submit" class="btn btn-primary" id="submitPrompt">Submit</button>
+            </div>
+        </form>
+        <a th:href="@{/ownerlist}">Return to owners list</a>
+    </div>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script th:src="@{/js/action.js}"></script>
+</div>
+</body>
+</html>

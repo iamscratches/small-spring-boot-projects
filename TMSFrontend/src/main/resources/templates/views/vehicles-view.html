@@ -1,0 +1,50 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}"lang="en">
+<head>
+    <title>Vehicle</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="container main-content">
+        <div class="row">
+            <div class="col-7">
+                <h3>Vehicles</h3>
+            </div>
+            <div class="col">
+                <a th:href="@{/vehicle/add}">Add New Vehicle</a>
+            </div>
+        </div>
+        <table id="table" class="table table-striped table-sm">
+            <thead>
+                <th scope="col">#</th>
+                <th scope="col">owner ID</th>
+                <th scope="col">Model</th>
+                <th scope="col">vehicle type</th>
+                <th scope="col">color</th>
+                <th scope="col">manufacturer</th>
+                <th scope="col">last pollution check</th>
+                <th scope="col">expired</th>
+                <th scope="col">Actions</th>
+            </thead>
+            <tbody>
+                <tr th:each="vehicle : ${vehicles}">
+                    <th scope="row"><a th:href="@{'/vehicle/' + ${vehicle.vehicleId}}" th:text="${vehicle.vehicleId}"></a></th>
+                    <td th:text="${vehicle.ownerId}"></td>
+                    <td th:text="${vehicle.modelName}"></td>
+                    <td th:text="${vehicle.typeOfVehicles.vehicleCategory}"></td>
+                    <td th:text="${vehicle.color}"></td>
+                    <td th:text="${vehicle.manufacturer.name}"></td>
+                    <td th:text="${#strings.arraySplit(vehicle.lpc, 'T')[0]}"></td>
+                    <td th:text="${vehicle.expired}"></td>
+                    <td ><a th:href="@{'/vehicle/delete/' + ${vehicle.vehicleId}}"><iconify-icon icon="bi:trash"></iconify-icon></a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script th:src="@{/js/table.js}"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.0-beta.3/iconify-icon.min.js"></script>
+</div>
+</body>
+</html>

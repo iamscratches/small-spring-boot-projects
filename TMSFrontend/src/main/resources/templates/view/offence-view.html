@@ -1,0 +1,46 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}"lang="en">
+<head>
+    <title>offence</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="container main-content">
+        <div id="successMsg">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-success" id="message" th:text="${message != null} ? ${message} : 'Loaded successfully'"></li>
+            </ul>
+        </div>
+        <h3>offence View</h3>
+        <form method="post" action="#" th:action="'/offence/add'" th:object="${offence}">
+            <div class="form-row">
+                <div class="col">
+                    <input th:id="offenceId" th:name="offenceId" type="text" class="form-control" title="Offence ID" placeholder="Offence ID(Auto Generated)" th:value="${offence != null} ? ${offence.offenceId}"/>
+                </div>
+                <div class="col">
+                    <input th:id="nof" th:name="nof" type="text" class="form-control" title="Nature Of Offence" placeholder="Nature Of Offence" th:value="${offence != null} ? ${offence.nof}"/>
+                </div>
+                <div class="col">
+                    <input th:id="vehicleType" th:name="vehicleType" type="text" class="form-control" title="Vehicle Type ID" placeholder="Vehicle Type ID(*)" th:value="${offence != null} ? ${offence.vehicleType}"/>
+                </div>
+                <div class="col">
+                    <input th:id="penalty" th:name="penalty" type="text" class="form-control" title="Penalty" placeholder="Penalty(*)" th:value="${offence != null} ? ${offence.penalty}"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <input th:id="vehicleCategory" th:name="vehicleCategory" type="text" class="form-control" title="Vehicle Category" placeholder="Vehicle Category" th:value="${offence != null && offence.typeOfVehicles!=null} ? ${offence.typeOfVehicles.vehicleCategory}" disabled="true"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <button type="submit" class="btn btn-primary" id="submitPrompt">Submit</button>
+            </div>
+        </form>
+        <a th:href="@{/offencelist}">Return to offences list</a>
+    </div>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script th:src="@{/js/action.js}"></script>
+</div>
+</body>
+</html>

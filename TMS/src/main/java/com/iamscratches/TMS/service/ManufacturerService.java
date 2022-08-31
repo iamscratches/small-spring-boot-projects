@@ -80,6 +80,13 @@ public class ManufacturerService {
         }
     }
 
+    public ResponseMapper getManufacturerById(int ID){
+        if(this.repository.existsById(ID))
+            return new ResponseMapper(HttpStatus.FOUND, "Manufacturer details found with given ID",
+                    this.repository.findById(ID));
+        return new ResponseMapper(HttpStatus.NOT_FOUND, "No manufacturer Info found with given ID");
+    }
+
     private String validateManufacturer(Manufacturer manufacturer){
         if(manufacturer.getManufacturerId()==null){
             manufacturer.setManufacturerId(IdGenerator.generateUniqueId());

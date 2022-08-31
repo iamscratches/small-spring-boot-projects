@@ -1,0 +1,85 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}"lang="en">
+<head>
+    <title>Vehicle</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="container main-content">
+        <div id="successMsg">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-success" id="message" th:text="${message != null} ? ${message} : 'Loaded successfully'"></li>
+            </ul>
+        </div>
+        <h3>Vehicle View</h3>
+        <form method="post" action="#" th:action="'/vehicle/add'" th:object="${Vehicle}">
+            <div class="form-row">
+                <div class="col">
+                    <input th:id="vehicleId" th:name="vehicleId" type="text" class="form-control" title="Vehicle ID" placeholder="Vehicle ID(auto-generated)" th:value="${vehicle != null} ? ${vehicle.vehicleId}"/>
+                </div>
+                <div class="col">
+                    <input th:id="modelNo" th:name="modelNo" type="text" class="form-control" title="Model No." placeholder="Model No.(*)" th:value="${vehicle != null} ? ${vehicle.modelNo}"/>
+                </div>
+                <div class="col">
+                    <input th:id="modelName" th:name="modelName" type="text" class="form-control" title="Model Name"  placeholder="Model name.(*)" th:value="${vehicle != null} ? ${vehicle.modelName}"/>
+                </div>
+                <div class="col">
+                    <input th:id="vehicleType" th:name="vehicleType" type="text" class="form-control" title="vehicle type ID"  placeholder="vehicle type ID(*)" th:value="${vehicle != null} ? ${vehicle.vehicleType}"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <input th:id="color" th:name="color" type="text" class="form-control" title="color" placeholder="color" th:value="${vehicle != null} ? ${vehicle.color}"/>
+                </div>
+                <div class="col">
+                    <input th:id="ownerId" th:name="ownerId" type="text" class="form-control" title="Owner ID" placeholder="Owner Id" th:value="${vehicle != null} ? ${vehicle.ownerId}"/>
+                </div>
+                <div class="col">
+                    <input th:id="manufacturerId" th:name="manufacturerId" type="text" class="form-control" title="Manufacturer ID"  placeholder="Manufacturer ID(*)" th:value="${vehicle != null} ? ${vehicle.manufacturerId}"/>
+                </div>
+                <div class="col">
+                    <input th:id="dom" th:name="dom" type="text" class="form-control" title="Date Of Manufacture"  placeholder="Date Of Manufacturer" th:value="${vehicle != null} ? ${#strings.arraySplit(vehicle.dom, 'T')[0]}"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <input th:id="noc" th:name="noc" type="text" class="form-control" title="No of cylinders"  placeholder="No of cylinders" th:value="${vehicle != null} ? ${vehicle.noc}"/>
+                </div>
+                <div class="col">
+                    <input th:id="cc" th:name="cc" type="text" class="form-control" title="Cylinder Capacity"  placeholder="Cylinder capacity" th:value="${vehicle != null} ? ${vehicle.cc}"/>
+                </div>
+                <div class="col">
+                    <input th:id="fuelUsed" th:name="fuelUsed" type="text" class="form-control" title="Fuel Used" placeholder="Fuel Used" th:value="${vehicle != null} ? ${vehicle.fuelUsed}"/>
+                </div>
+                <div class="col">
+                    <input th:id="travelledKm" th:name="travelledKm" type="text" class="form-control" title="travelled distance"  placeholder="travelled(in Km)" th:value="${vehicle != null} ? ${vehicle.travelledKm}"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <input th:id="lpc" th:name="lpc" type="text" class="form-control" title="Last Pollution check date"  placeholder="Last Pollution check date" th:value="${vehicle != null} ? ${#strings.arraySplit(vehicle.lpc, 'T')[0]}"/>
+                </div>
+                <div class="col">
+                    <input th:id="expired" th:name="expired" type="text" class="form-control" title="Expired!"  placeholder="Expired!" th:value="${vehicle != null} ? ${vehicle.expired}"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <input th:id="ManufacturerName" th:name="ManufacturerName" type="text" class="form-control" title="Manufacturer Name"  placeholder="Manufacturer Name" th:value="${vehicle != null && vehicle.manufacturer != null} ? ${vehicle.manufacturer.name}" disabled="true"/>
+                </div>
+                <div class="col">
+                    <input th:id="typeOfVehicles" th:name="typeOfVehicles" type="text" class="form-control" title="Vehicle Type"  placeholder="Vehicle Type" th:value="${vehicle != null && vehicle.typeOfVehicles != null} ? ${vehicle.typeOfVehicles.vehicleCategory}" disabled="true"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <button type="submit" class="btn btn-primary" id="submitPrompt">Submit</button>
+            </div>
+        </form>
+        <a th:href="@{/vehiclelist}">Return to vehicles list</a>
+    </div>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script th:src="@{/js/action.js}"></script>
+</div>
+</body>
+</html>

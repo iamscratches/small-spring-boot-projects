@@ -1,0 +1,92 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}"lang="en">
+<head>
+    <title>Home</title>
+</head>
+<body>
+
+    <div layout:fragment="content">
+        <div class="jumbotron main-content">
+            <h1>Welcome to Traffic Management System</h1>
+            <p>This side is made for sole purpose of creating a poject made of spring boot and solely for learning
+                purpose. In no way should it be considered as an actual site.</p>
+        </div>
+        <div class="container">
+            <h3>What do you want to do?</h3>
+            <div class="row">
+                <div class="col">
+                    <a th:href="@{/vehiclelist}">View Vehicles</a>
+                </div>
+                <div class="col">
+                    <a th:href="@{/vehicle/add}">Add Vehicles</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <a th:href="@{/userlist}">View Users</a>
+                </div>
+                <div class="col">
+                    <a th:href="@{/user/add}">Add Users</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <a th:href="@{/typeofvehiclelist}">View Type Of Vehicles</a>
+                </div>
+                <div class="col">
+                    <a th:href="@{/tov/add}">Add Type Of Vehicles</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <a th:href="@{/rolelist}">View Roles</a>
+                </div>
+                <div class="col">
+                    <a th:href="@{/role/add}">Add Roles</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <a th:href="@{/registrationlist}">View Registrations</a>
+                </div>
+                <div class="col">
+                    <a th:href="@{/registration/add}">Add Registrations</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <a th:href="@{/ownerlist}">View Owners</a>
+                </div>
+                <div class="col">
+                    <a th:href="@{/owner/add}">Add Owners</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <a th:href="@{/offencedetailsList}">View Offence Details</a>
+                </div>
+                <div class="col">
+                    <a th:href="@{/offencedetail/add}">Add Offence Details</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <a th:href="@{/offencelist}">View Offences</a>
+                </div>
+                <div class="col">
+                    <a th:href="@{/offence/add}">Add Offences</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <a th:href="@{/manufacturerlist}">View Manufacturers</a>
+                </div>
+                <div class="col">
+                    <a th:href="@{/manufacturer/add}">Add Manufacturers</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

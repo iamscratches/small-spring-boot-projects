@@ -1,6 +1,7 @@
 package com.iamscratches.TMS.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -11,8 +12,10 @@ public class Registration implements Serializable {
     @Column
     private Integer appNo;
     @Column(name = "VEHICLE_ID")
+    @NotNull
     private Integer vehicleId;
     @Column(name = "VEHICLE_NO")
+    @NotNull
     private Integer vehicleNo;
     @Column(name = "OWNER_ID")
     private Integer ownerId;

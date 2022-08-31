@@ -18,4 +18,6 @@ public interface OwnerRepository  extends JpaRepository<Owner, Integer> {
     boolean existsByPancard(String pancard);
 
     void deleteByPancard(String pancard);
+
+    Owner findByOwnerId(int id);
 }

@@ -1,0 +1,77 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}"lang="en">
+<head>
+    <title>offencedetail</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="container main-content">
+        <div id="successMsg">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-success" id="message" th:text="${message != null} ? ${message} : 'Loaded successfully'"></li>
+            </ul>
+        </div>
+        <h3>offencedetail View</h3>
+        <form method="post" action="#" th:action="'/offencedetail/add'" th:object="${offencedetail}">
+            <div class="form-row">
+                <div class="col">
+                    <input th:id="appNo" th:name="appNo" type="text" class="form-control" title="Application No." placeholder="Application No.(Auto Generated)" th:value="${offencedetail != null} ? ${offencedetail.appNo}"/>
+                </div>
+                <div class="col">
+                    <input th:id="offenceId" th:name="offenceId" type="text" class="form-control" title="Offence ID" placeholder="Offence ID(*)" th:value="${offencedetail != null} ? ${offencedetail.offenceId}"/>
+                </div>
+                <div class="col">
+                    <input th:id="vehicleNo" th:name="vehicleNo" type="text" class="form-control" title="Vehicle No." placeholder="Vehicle No.(*)" th:value="${offencedetail != null} ? ${offencedetail.vehicleNo}"/>
+                </div>
+                <div class="col">
+                    <input th:id="offenceTime" th:name="offenceTime" type="text" class="form-control" title="Offence Time" placeholder="Offence Time(Auto Generated)" th:value="${offencedetail != null} ? ${offencedetail.offenceTime}"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <input th:id="place" th:name="place" type="text" class="form-control" title="Place Of Offence" placeholder="Place Of Offence" th:value="${offencedetail != null} ? ${offencedetail.place}"/>
+                </div>
+                <div class="col">
+                    <input th:id="reportedBy" th:name="reportedBy" type="text" class="form-control" title="Reporter username" placeholder="Reporter username(*)" th:value="${offencedetail != null} ? ${offencedetail.reportedBy}"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-2">
+                    <input th:id="vehicleType" th:name="vehicleType" type="text" class="form-control" title="Type Of Vehicle" placeholder="Type Of Vehicle" th:value="${offencedetail != null && offencedetail.offence!=null} ? ${offencedetail.offence.vehicleType}" disabled="true"/>
+                </div>
+                <div class="col-2">
+                    <input th:id="penalty" th:name="penalty" type="text" class="form-control" title="Penalty" placeholder="Penalty" th:value="${offencedetail != null && offencedetail.offence!=null} ? ${offencedetail.offence.penalty}" disabled="true"/>
+                </div>
+                <div class="col-5">
+                    <input th:id="nof" th:name="nof" type="text" class="form-control" title="Nature Of Offence" placeholder="Nature Of Offence" th:value="${offencedetail != null && offencedetail.offence!=null} ? ${offencedetail.offence.nof}" disabled="true"/>
+                </div>
+                <div class="col-3">
+                    <input th:id="typeOfVehicles" th:name="typeOfVehicles" type="text" class="form-control" title="Penalised Vehicle Type" placeholder="Penalised Vehicle Type" th:value="${offencedetail != null && offencedetail.offence!=null} ? ${offencedetail.offence.typeOfVehicles.vehicleCategory}" disabled="true"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <input th:id="vehicleNo" th:name="vehicleNo" type="text" class="form-control" title="Vehicle No." placeholder="Vehicle No.(*)" th:value="${offencedetail != null && offencedetail.registration!=null} ? ${offencedetail.registration.vehicleNo}" disabled="true"/>
+                </div>
+                <div class="col">
+                    <input th:id="modelName" th:name="modelName" type="text" class="form-control" title="Model Name" placeholder="Model Name" th:value="${offencedetail != null && offencedetail.registration!=null} ? ${offencedetail.registration.vehicle.modelName}" disabled="true"/>
+                </div>
+                <div class="col">
+                    <input th:id="fname" th:name="fname" type="text" class="form-control" title="Owner Name" placeholder="Owner Name" th:value="${offencedetail != null && offencedetail.registration!=null} ? ${offencedetail.registration.owner.fname} + ' ' + ${offencedetail.registration.owner.lname}" disabled="true"/>
+                </div>
+                <div class="col">
+                    <input th:id="mobileNo" th:name="mobileNo" type="text" class="form-control" title="Contact Info" placeholder="Contact Info" th:value="${offencedetail != null && offencedetail.registration!=null} ? ${offencedetail.registration.owner.mobileNo}" disabled="true"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <button type="submit" class="btn btn-primary" id="submitPrompt">Submit</button>
+            </div>
+        </form>
+        <a th:href="@{/offencedetailsList}">Return to offencedetails list</a>
+    </div>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script th:src="@{/js/action.js}"></script>
+</div>
+</body>
+</html>

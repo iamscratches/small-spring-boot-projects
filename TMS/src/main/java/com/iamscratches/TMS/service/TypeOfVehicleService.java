@@ -104,5 +104,12 @@ public class TypeOfVehicleService {
         }
     }
 
+    public ResponseMapper getTypeOfVehicleById(int ID){
+        if(this.repository.existsById(ID))
+            return new ResponseMapper(HttpStatus.FOUND, "TOV info found with given ID",
+                    this.repository.findById(ID));
+        return new ResponseMapper(HttpStatus.NOT_FOUND, "No TOV Info found with given ID");
+    }
+
 
 }

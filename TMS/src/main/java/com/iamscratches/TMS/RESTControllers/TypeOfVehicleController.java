@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/tov")
@@ -67,6 +68,14 @@ public class TypeOfVehicleController {
         }
         else
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.FOUND)
+    public ResponseEntity<ResponseMapper> findTOV(@RequestParam(value = "ID") int ID) throws NoSuchElementException {
+        LOGGER.debug("Received search request for TOV ID " + ID);
+        ResponseMapper mapper = service.getTypeOfVehicleById(ID);
+        return new ResponseEntity<>(mapper, mapper.getResponse().getResponseCode());
     }
 
 }

@@ -62,7 +62,7 @@ public class RolesService {
         }
     }
 
-    public ResponseMapper deleteUserById(String username){
+    public ResponseMapper deleteRoleById(String username){
         LOGGER.debug("Recieved user delete request by username roles");
         try{
             if(!repository.existsByUsername(username)){
@@ -92,6 +92,13 @@ public class RolesService {
             return new ResponseMapper(HttpStatus.GATEWAY_TIMEOUT,
                     "Something went wrong, not able to delete user details");
         }
+    }
+
+    public ResponseMapper getRoleByUsername(String username){
+        if(this.repository.existsByUsername(username))
+            return new ResponseMapper(HttpStatus.FOUND, "Role info found with given username",
+                    this.repository.findByUsername(username));
+        return new ResponseMapper(HttpStatus.NOT_FOUND, "No Role Info found with given username");
     }
 
     private String validateRoles(Roles roles){

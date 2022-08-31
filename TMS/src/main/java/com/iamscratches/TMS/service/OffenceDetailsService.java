@@ -80,6 +80,13 @@ public class OffenceDetailsService {
         }
     }
 
+    public ResponseMapper getOffenceDetailsById(int ID){
+        if(this.repository.existsById(ID))
+            return new ResponseMapper(HttpStatus.FOUND, "Offence Details details found with given ID",
+                    this.repository.findById(ID));
+        return new ResponseMapper(HttpStatus.NOT_FOUND, "No Offence Details Info found with given ID");
+    }
+
     private String validateOffenceDetails(OffenceDetails details){
         if(details.getAppNo()==null)
             details.setAppNo(IdGenerator.generateUniqueId());
@@ -89,7 +96,7 @@ public class OffenceDetailsService {
         if(repository.existsById(details.getAppNo()))
             return "Application ID already present";
         else if(details.getOffenceId()==null)
-            return "Please provide a Vehicle ID";
+            return "Please provide a Offence ID";
         else if(details.getVehicleNo()==null)
             return "Please provide a Vehicle no";
 

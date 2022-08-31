@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/owner")
@@ -39,10 +40,27 @@ public class OwnerController {
         return entity;
     }
 
-    @PutMapping(value = "/import", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/{ID}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResponseMapper> getOwner(int id){
+        LOGGER.debug("Received Owner ID info request");
+        ResponseMapper mapper = service.getOwnerById(id);
+        LOGGER.debug("Owner : " + mapper.getValue());
+        ResponseEntity<ResponseMapper> entity = new ResponseEntity<>(mapper, mapper.getResponse().getResponseCode());
+        LOGGER.debug("Send Owner info details");
+        return entity;
+    }
+
+    @PostMapping(value = "/import", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseMapper> insertOwner(@RequestBody Owner owner){
         LOGGER.debug("Recieved Owner insert request" + owner);
-        ResponseMapper mapper = service.insertOwner(owner);
+        ResponseMapper mapper = service.insertOwner(owner, false);
+        return new ResponseEntity<>(mapper, mapper.getResponse().getResponseCode());
+    }
+
+    @PutMapping(value = "/import", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResponseMapper> updateOwner(@RequestBody Owner owner){
+        LOGGER.debug("Recieved Owner update request" + owner);
+        ResponseMapper mapper = service.insertOwner(owner, true);
         return new ResponseEntity<>(mapper, mapper.getResponse().getResponseCode());
     }
 
@@ -71,6 +89,14 @@ public class OwnerController {
         }
         else
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.FOUND)
+    public ResponseEntity<ResponseMapper> findOwner(@RequestParam(value = "ID") int ID) throws NoSuchElementException {
+        LOGGER.debug("Received search request for Owwner ID " + ID);
+        ResponseMapper mapper = service.getOwnerById(ID);
+        return new ResponseEntity<>(mapper, mapper.getResponse().getResponseCode());
     }
 
 }

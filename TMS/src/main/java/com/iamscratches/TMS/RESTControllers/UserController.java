@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/user")
@@ -53,9 +54,17 @@ public class UserController {
 
     @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity<ResponseMapper> deleteUser(@RequestParam(value="username") String userID){
+    public ResponseEntity<ResponseMapper> deleteUser(@RequestParam(value="username") String username){
         LOGGER.debug("Recieved user delete request");
-        ResponseMapper mapper = service.deleteUserById(userID);
+        ResponseMapper mapper = service.deleteUserById(username);
+        return new ResponseEntity<>(mapper, mapper.getResponse().getResponseCode());
+    }
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.FOUND)
+    public ResponseEntity<ResponseMapper> findUser(@RequestParam(value = "ID") String username) throws NoSuchElementException {
+        LOGGER.debug("Received search request for User username " + username);
+        ResponseMapper mapper = service.getUserByUsername(username);
         return new ResponseEntity<>(mapper, mapper.getResponse().getResponseCode());
     }
 }

@@ -52,12 +52,10 @@ public class VehicleController {
      */
     @PostMapping(value = "/import", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public VehiclesUpdateList importVehicles(@RequestBody List<Vehicle> vehicleList){
+    public ResponseEntity<ResponseMapper> importVehicles(@RequestBody List<Vehicle> vehicleList){
         LOGGER.debug(String.valueOf(vehicleList));
-        VehiclesUpdateList response = service.importVehicles(vehicleList, true);
-        response.putTopStats("response", HttpStatus.CREATED.value());
-
-        return response;
+        ResponseMapper mapper = service.importVehicles(vehicleList, true);
+        return new ResponseEntity<>(mapper, mapper.getResponse().getResponseCode());
     }
 
     /*
@@ -65,11 +63,10 @@ public class VehicleController {
      */
     @PatchMapping(value = "/import", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public VehiclesUpdateList updateBulkVehicleEntry(@RequestBody List<Vehicle> vehicleList){
+    public ResponseEntity<ResponseMapper> updateBulkVehicleEntry(@RequestBody List<Vehicle> vehicleList){
         LOGGER.debug(String.valueOf(vehicleList));
-        VehiclesUpdateList response = service.importVehicles(vehicleList, false);
-        response.putTopStats("response", HttpStatus.CREATED.value());
-        return response;
+        ResponseMapper mapper = service.importVehicles(vehicleList, false);
+        return new ResponseEntity<>(mapper, mapper.getResponse().getResponseCode());
     }
 
     /*
@@ -77,9 +74,10 @@ public class VehicleController {
      */
     @PutMapping(value = "/import", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public String[] vehicleEntry(@RequestBody Vehicle vehicle){
+    public ResponseEntity<ResponseMapper> vehicleEntry(@RequestBody Vehicle vehicle){
         LOGGER.debug(String.valueOf(vehicle));
-        return service.importSingleVehicle(vehicle);
+        ResponseMapper mapper = service.importSingleVehicle(vehicle);
+        return new ResponseEntity<>(mapper, mapper.getResponse().getResponseCode());
     }
 
     /*
@@ -87,20 +85,19 @@ public class VehicleController {
      */
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.FOUND)
-    public Vehicle findVehicle(@RequestParam(value = "ID") int ID) throws NoSuchElementException{
+    public ResponseEntity<ResponseMapper> findVehicle(@RequestParam(value = "ID") int ID) throws NoSuchElementException{
         LOGGER.debug("Received search request for vehicle ID " + ID);
-        Vehicle vehicle = service.getVehicleByID(ID).orElseThrow(() ->
-                new NoSuchElementException("no corresponding Vehicle ID found"));
-        return vehicle;
+        ResponseMapper mapper = service.getVehicleByID(ID);
+        return new ResponseEntity<>(mapper, mapper.getResponse().getResponseCode());
     }
 
     @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.FOUND)
-    public String deleteVehicle(@RequestParam(value = "ID") int ID) throws NoSuchElementException, JsonProcessingException {
+    public ResponseEntity<ResponseMapper> deleteVehicle(@RequestParam(value = "ID") int ID) throws NoSuchElementException, JsonProcessingException {
         LOGGER.debug("Received delete request for vehicle ID " + ID);
-        String response = service.deleteVehicleID(ID);
-        LOGGER.debug(response);
-        return response;
+        ResponseMapper mapper = service.deleteVehicleID(ID);
+
+        return new ResponseEntity<>(mapper, mapper.getResponse().getResponseCode());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -108,13 +105,6 @@ public class VehicleController {
     public String return400(JsonMappingException ex) throws JsonProcessingException {
         LOGGER.error("Unable to complete transactions", ex);
         return JsonMapper.mapToJson(new AbstractMap.SimpleEntry<>("message","JSON Validation failed!!"));
-    }
-
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(NoSuchElementException.class)
-    public String return404(NoSuchElementException ex) throws JsonProcessingException {
-        LOGGER.error("Unable to complete transaction:" + ex.getMessage());
-        return JsonMapper.mapToJson(new AbstractMap.SimpleEntry<>("message",ex.getMessage()));
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
